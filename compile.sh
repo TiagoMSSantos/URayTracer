@@ -1,3 +1,3 @@
 #!/bin/bash
 
-scalac *.scala -d build -verbose -Xcheckinit -Xlint
+scalac *.scala -d build -Xcheckinit -Xlint #-verbose

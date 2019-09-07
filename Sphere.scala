@@ -9,13 +9,13 @@ class Sphere(var radius : Float = 0, var center : Vector3, var emission : Vector
         if (tc < 0) false
 
         var distance = math.sqrt((tc * tc) - (L * L))
-        if (distance > sphere.radius) false
+        if (distance > this.radius) false
 
-        var t1c = math.sqrt((s.radius * s.radius) - (distance * distance))
+        var t1c = math.sqrt((this.radius * this.radius) - (distance * distance))
 
         var t1 = tc - t1c
         var t2 = tc + t1c
-        true
+        //true
     }
     
 }
