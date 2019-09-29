@@ -3,5 +3,6 @@
 **/.metals
 **/build
 **/out
+**/target
 **/*.log
 **/*.iml
