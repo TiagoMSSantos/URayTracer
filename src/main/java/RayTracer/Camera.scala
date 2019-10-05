@@ -30,7 +30,7 @@ class Camera (position : Vector3, lookAt : Vector3, var width : Int, var height 
     val direction = new Vector3(dirX, dirY, dirZ).normalize()
     val origin = this.position
 
-    val ray : Ray = new Ray(direction, origin)
+    val ray : Ray = Ray(direction, origin, Float.MaxValue, 1)
     ray
   }
 

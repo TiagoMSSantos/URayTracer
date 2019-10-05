@@ -15,12 +15,15 @@ object Main {
   def main(args: Array[String]): Unit = {
     val camera = Camera(Vector3(0.0f, -0.5f, -4f), Vector3(0f, -0.5f), 100, 100, 45, 45)
 
-    val sphereRed : Sphere = Sphere(0.4f, Vector3(), Vector3(), Vector3(1))
-    val sphereGreen : Sphere = Sphere(0.4f, Vector3(0, -1f), Vector3(), Vector3(0, 1))
-    val sphereBlue : Sphere = Sphere(0.4f, Vector3(-1f), Vector3(), Vector3(0, 0, 1))
-    val scene = Scene(Array(sphereRed, sphereGreen, sphereBlue))
+    val sphereRed : Sphere = Sphere(0.4f, Vector3(), Material(Vector3(1), Vector3()))
+    val sphereGreen : Sphere = Sphere(0.4f, Vector3(0, -1f), Material(Vector3(0, 1), Vector3()))
+    val sphereBlue : Sphere = Sphere(0.4f, Vector3(-1f), Material(Vector3(0, 0, 1), Vector3()))
+    val sphereYellow : Sphere = Sphere(0.4f, Vector3(1), Material(Vector3(), Vector3(1, 1)))
+    val light : Light = Light(Vector3(0, 10), Vector3(0.5f, 0.5f, 0.5f))
+    val scene = Scene(Array(sphereRed, sphereGreen, sphereBlue, sphereYellow), Array(light))
+    val shader = Shader()
 
-    val renderer = new Renderer(camera, scene)
+    val renderer = new Renderer(camera, scene, shader)
     renderer.render()
     val mainGL: MainGL = new MainGL()
     mainGL.renderGL(renderer.image, renderer.resX, renderer.resY)

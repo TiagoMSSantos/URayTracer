@@ -41,8 +41,16 @@ class Vector3(var x : Float = 0, var y : Float = 0, var z: Float = 0) {
     Vector3(this.x - other.x, this.y - other.y, this.z - other.z)
   }
 
+  def inverted(): Vector3 = {
+    Vector3(-this.x, -this.y, -this.z)
+  }
+
   def *(other : Vector3): Float = {
     this.x * other.x + this.y * other.y + this.z * other.z
+  }
+
+  def mult(other : Vector3): Vector3 = {
+    Vector3(this.x * other.x, this.y * other.y, this.z * other.z)
   }
 
   def *(value : Float): Vector3 = {
@@ -56,6 +64,14 @@ class Vector3(var x : Float = 0, var y : Float = 0, var z: Float = 0) {
       this.x * other.y - this.y * other.x
     )
   }
+
+  def hasValue() : Boolean = {
+    val hasX = this.x > 0
+    val hasY = this.y > 0
+    val hasZ = this.z > 0
+    hasX || hasY || hasZ
+  }
+
 }
 
 object Vector3 {

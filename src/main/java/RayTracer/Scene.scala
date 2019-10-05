@@ -1,21 +1,27 @@
 package RayTracer
 
-class Scene(spheres: Array[Sphere]) {
-  def apply(spheres: Array[Sphere]): Scene = {
-    new Scene(spheres)
-  }
+class Scene(var spheres: Array[Sphere], var lights: Array[Light]) {
 
-  def intersect(ray: Ray): Intersection = {
-    var intersection: Intersection = Intersection(Vector3(), Float.MaxValue, ray)
-    for (i: Int <- spheres.indices) {
-      intersection = spheres.apply(i).intersect(ray, intersection)
+  def trace(ray: Ray): Intersection = {
+    var intersection: Intersection = Intersection(Vector3(), Vector3(), Float.MaxValue, Material(Vector3(), Vector3()))
+    for (sphere <- spheres) {
+      intersection = sphere.intersect(ray, intersection)
     }
     intersection
   }
+
+  def shadowTrace(ray: Ray): Boolean = {
+    var intersection: Intersection = Intersection(Vector3(), Vector3(), Float.MaxValue, Material(Vector3(), Vector3()))
+    for (sphere <- spheres) {
+      intersection = sphere.intersect(ray, intersection)
+    }
+    !intersection.intersected
+  }
+
 }
 
 object Scene {
-  def apply(spheres: Array[Sphere]): Scene = {
-    new Scene(spheres)
+  def apply(spheres: Array[Sphere], lights : Array[Light]): Scene = {
+    new Scene(spheres, lights)
   }
 }
