@@ -11,11 +11,9 @@ class Renderer (camera : Camera, scene : Scene, shader : Shader) {
     for (y <- 0 until this.resY) {
       for (x <- 0 until this.resX) {
         val ray = camera.castRay(x, y)
-        val intersection = scene.trace(ray)
-        val color = shader.shade(intersection, ray, scene)
+        val color = shader.trace(ray, scene)
 
-        println("x: " + x + ", y: " + y)
-        intersection.printIntersection()
+        //println("x: " + x + ", y: " + y)
         val pixelIndex : Int = ((this.resY - 1 - y) * this.resX + x) * 4
         val pixelColor : Int = Utils.convertColorToInt(color)
 

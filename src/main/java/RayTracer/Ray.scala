@@ -12,6 +12,6 @@ class Ray(var direction : Vector3, var origin : Vector3, var distance : Float, v
 
 object Ray {
     def apply (direction : Vector3, origin : Vector3, dist : Float, depth : Integer) : Ray = {
-        new Ray (direction, origin, dist, depth)
+        new Ray (direction.normalize(), origin, dist, depth)
     }
 }

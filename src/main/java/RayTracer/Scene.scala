@@ -14,8 +14,11 @@ class Scene(var spheres: Array[Sphere], var lights: Array[Light]) {
     var intersection: Intersection = Intersection(Vector3(), Vector3(), Float.MaxValue, Material(Vector3(), Vector3()))
     for (sphere <- spheres) {
       intersection = sphere.intersect(ray, intersection)
+      if (intersection.intersected) {
+        return false
+      }
     }
-    !intersection.intersected
+    true
   }
 
 }

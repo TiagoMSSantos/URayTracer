@@ -2,19 +2,6 @@ package RayTracer
 
 class Vector3(var x : Float = 0, var y : Float = 0, var z: Float = 0) {
 
-  def apply(x: Float, y: Float, z: Float): Vector3 = {
-    val vector = new Vector3(x, y, z)
-    vector
-  }
-
-  def getX: Float = x
-  def getY: Float = y
-  def getZ: Float = z
-
-  def setX(x : Float) {
-    this.x = x
-  }
-
   def getMagnitude: Float = {
     math.sqrt((this.x * this.x + this.y * this.y + this.z * this.z).toDouble).toFloat
   }

@@ -28,6 +28,6 @@ object Intersection {
               intersectionNormal : Vector3 = Vector3(),
               distance : Float = Float.MaxValue,
               material : Material = Material(Vector3(), Vector3())) : Intersection = {
-    new Intersection(intersectionPoint, intersectionNormal, distance)
+    new Intersection(intersectionPoint, intersectionNormal, distance, material)
   }
 }

@@ -1,16 +1,11 @@
 package RayTracer
 
 class Camera (position : Vector3, lookAt : Vector3, var width : Int, var height : Int, hFov : Float, vFov : Float) {
-  val up : Vector3 = new Vector3 (0, 1, 0)
+  val up : Vector3 = Vector3 (0, 1)
   val direction : Vector3 = (this.lookAt - this.position).normalize()
   val right : Vector3 = this.up.crossProduct(this.direction).normalize()
   val hfov : Float = (hFov * Math.PI.toFloat)  / 180f
   val vfov : Float = (vFov * Math.PI.toFloat)  / 180f
-
-  def apply(position : Vector3, lookAt : Vector3, width : Int, height : Int, hFov : Float, vFov : Float) : Camera = {
-    val camera = new Camera(position, lookAt, width, height, hFov, vFov)
-    camera
-  }
 
   def castRay(x: Int, y: Int) : Ray = {
     //view space coordinates
@@ -27,10 +22,10 @@ class Camera (position : Vector3, lookAt : Vector3, var width : Int, var height 
     val dirY = Math.atan(v_alpha).toFloat
     val dirZ = ws
 
-    val direction = new Vector3(dirX, dirY, dirZ).normalize()
+    val direction = Vector3(dirX, dirY, dirZ)
     val origin = this.position
 
-    val ray : Ray = Ray(direction, origin, Float.MaxValue, 1)
+    val ray : Ray = Ray(direction.normalize(), origin, Float.MaxValue, 1)
     ray
   }
 

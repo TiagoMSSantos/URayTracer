@@ -2,12 +2,22 @@ package RayTracer
 
 class Shader() {
 
+  def trace (ray: Ray, scene: Scene): Vector3 = {
+    val intersection = scene.trace(ray)
+    if (intersection.intersected) {
+      return shade(intersection, ray, scene)
+    }
+    Vector3()
+  }
+
   def shade (intersection: Intersection, ray: Ray, scene: Scene): Vector3 = {
     var color : Vector3 = Vector3()
     if (intersection.intersected && ray.depth <= 5) {
-      val enteringObject = intersection.intersectionNormal * ray.direction > 0
-      val shadingNormal : Vector3 = if (enteringObject) intersection.intersectionNormal else intersection.intersectionNormal.inverted()
+      val intersectionNormal = intersection.intersectionNormal.normalize()
       val intersectionPoint = intersection.intersectionPoint
+
+      val enteringObject = ray.direction.normalize() * intersectionNormal < 0
+      val shadingNormal : Vector3 = if (enteringObject) intersectionNormal else intersectionNormal.inverted()
 
       if (intersection.material.kd.hasValue()) {
         for(light <- scene.lights) {
@@ -15,7 +25,7 @@ class Shader() {
           val projectionDir = dirToLight * shadingNormal
           if (projectionDir > 0) {
             val distanceToLight = dirToLight.getMagnitude
-            val newRay : Ray  = Ray(dirToLight, intersectionPoint, distanceToLight, ray.depth + 1)
+            val newRay : Ray  = Ray(dirToLight.normalize(), intersectionPoint, distanceToLight, ray.depth + 1)
             val intersectedLight = scene.shadowTrace(newRay)
             if (intersectedLight) {
               color = intersection.material.kd.mult(light.emission) * projectionDir
@@ -25,8 +35,8 @@ class Shader() {
       }
 
       if (intersection.material.ks.hasValue()) {
-        val newDir : Vector3 = calculateReflectionDir(ray.direction, shadingNormal)
-        val newRay : Ray  = Ray(newDir, intersectionPoint, Float.MaxValue, ray.depth + 1)
+        val newDir : Vector3 = calculateReflectionDir(ray.direction.normalize(), shadingNormal.normalize())
+        val newRay : Ray  = Ray(newDir.normalize(), intersectionPoint, Float.MaxValue, ray.depth + 1)
         val newIntersection : Intersection = scene.trace(newRay)
         if(newIntersection.intersected) {
           color = newIntersection.material.kd
@@ -38,21 +48,9 @@ class Shader() {
   }
 
   def calculateReflectionDir (dirInc : Vector3, normal : Vector3) : Vector3 = {
-    val projectionDir : Float = 2.0f * (normal * dirInc.inverted())
-
-    val reflectionDir : Vector3 = (normal * projectionDir) - dirInc.inverted()
-
     // Rr = Ri - 2 N (Ri . N)
-
-    /*
-        specDir = new myVect(shadingN);
-
-        specDir.mult (2.f * shadingN.dot(r.dir.symmetric()));
-        specDir.sub (r.dir.symmetric());
-
-        specDir.normalize();
-     */
-
+    val projectionDir : Float = dirInc * normal
+    val reflectionDir : Vector3 = dirInc - ((normal * projectionDir) * 2.0f)
     reflectionDir.normalize()
   }
 

@@ -28,8 +28,8 @@ class Sphere(var radius : Float = 0, var center : Vector3, var material : Materi
         }
       }
       val intsersectionPoint : Vector3 = ray.origin + ray.direction * distance
-      val intsersectionNormal : Vector3 = (this.center - ray.origin).normalize()
-      val newIntersection : Intersection = new Intersection (intsersectionPoint, intsersectionNormal, distance, this.material)
+      val intsersectionNormal : Vector3 = (intsersectionPoint - this.center).normalize()
+      val newIntersection : Intersection = Intersection (intsersectionPoint, intsersectionNormal, distance, this.material)
       val res = if (ray.distance <= newIntersection.distance) intersection else newIntersection
       return res
     }
