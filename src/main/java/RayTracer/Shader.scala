@@ -39,7 +39,7 @@ class Shader() {
         val newRay : Ray  = Ray(newDir.normalize(), intersectionPoint, Float.MaxValue, ray.depth + 1)
         val newIntersection : Intersection = scene.trace(newRay)
         if(newIntersection.intersected) {
-          color = newIntersection.material.kd
+          color = newIntersection.material.kd.mult(intersection.material.ks)
         }
       }
 

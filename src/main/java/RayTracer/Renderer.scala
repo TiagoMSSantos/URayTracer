@@ -13,7 +13,6 @@ class Renderer (camera : Camera, scene : Scene, shader : Shader) {
         val ray = camera.castRay(x, y)
         val color = shader.trace(ray, scene)
 
-        //println("x: " + x + ", y: " + y)
         val pixelIndex : Int = ((this.resY - 1 - y) * this.resX + x) * 4
         val pixelColor : Int = Utils.convertColorToInt(color)
 

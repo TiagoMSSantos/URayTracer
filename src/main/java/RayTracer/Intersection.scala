@@ -4,8 +4,8 @@ class Intersection (
                      var intersectionPoint : Vector3 = Vector3(),
                      var intersectionNormal : Vector3 = Vector3(),
                      var distance : Float = Float.MaxValue,
-                     var material : Material = Material(Vector3(), Vector3())) {
-  val intersected : Boolean = distance > 0 && distance < Float.MaxValue
+                     var material : Material = Material(Vector3(), Vector3()),
+                     var intersected : Boolean = false) {
 
   def printIntersection() {
     println("intersection:")
@@ -27,7 +27,8 @@ object Intersection {
               intersectionPoint : Vector3 = Vector3(),
               intersectionNormal : Vector3 = Vector3(),
               distance : Float = Float.MaxValue,
-              material : Material = Material(Vector3(), Vector3())) : Intersection = {
-    new Intersection(intersectionPoint, intersectionNormal, distance, material)
+              material : Material = Material(Vector3(), Vector3()),
+              intersected : Boolean = false) : Intersection = {
+    new Intersection(intersectionPoint, intersectionNormal, distance, material, intersected)
   }
 }
