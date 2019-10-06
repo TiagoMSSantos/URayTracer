@@ -75,91 +75,84 @@ class MainGL { // The window handle
   }
 
   private def initVertices(textureId : Int) {
+    val stackVertices = stackPush
     try {
-      val stack = stackPush
-      try {
-        val bufferVertices = stackMallocFloat(3 * 2 * 2)
-        bufferVertices.put(-1.0f).put(-1.0f)
-        bufferVertices.put(+1.0f).put(-1.0f)
-        bufferVertices.put(-1.0f).put(+1.0f)
+      val bufferVertices = stackMallocFloat(3 * 2 * 2)
+      bufferVertices.put(-1.0f).put(-1.0f)
+      bufferVertices.put(+1.0f).put(-1.0f)
+      bufferVertices.put(-1.0f).put(+1.0f)
 
-        bufferVertices.put(+1.0f).put(-1.0f)
-        bufferVertices.put(+1.0f).put(+1.0f)
-        bufferVertices.put(-1.0f).put(+1.0f)
-        bufferVertices.flip
+      bufferVertices.put(+1.0f).put(-1.0f)
+      bufferVertices.put(+1.0f).put(+1.0f)
+      bufferVertices.put(-1.0f).put(+1.0f)
+      bufferVertices.flip
 
-        val vboVertices = glGenBuffers
-        glBindBuffer(GL_ARRAY_BUFFER, vboVertices)
-        glBufferData(GL_ARRAY_BUFFER, bufferVertices, GL_STATIC_DRAW)
+      val vboVertices = glGenBuffers
+      glBindBuffer(GL_ARRAY_BUFFER, vboVertices)
+      glBufferData(GL_ARRAY_BUFFER, bufferVertices, GL_STATIC_DRAW)
 
-      } finally if (stack != null) stack.close()
-    }
+    } finally if (stackVertices != null) stackVertices.close()
     glEnableClientState(GL_VERTEX_ARRAY)
     glVertexPointer(2, GL_FLOAT, 0, 0L)
 
+    val stackColos = stackPush
     try {
-      val stack = stackPush
-      try {
-        val bufferColors = stackMallocFloat(3 * 4 * 2)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
-        bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      val bufferColors = stackMallocFloat(3 * 4 * 2)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
+      bufferColors.put(1.0f).put(1.0f).put(1.0f).put(1.0f)
 
-        bufferColors.flip
+      bufferColors.flip
 
-        val vboColors = glGenBuffers
-        glBindBuffer(GL_ARRAY_BUFFER, vboColors)
-        glBufferData(GL_ARRAY_BUFFER, bufferColors, GL_STATIC_DRAW)
+      val vboColors = glGenBuffers
+      glBindBuffer(GL_ARRAY_BUFFER, vboColors)
+      glBufferData(GL_ARRAY_BUFFER, bufferColors, GL_STATIC_DRAW)
 
-      } finally if (stack != null) stack.close()
-    }
+    } finally if (stackColos != null) stackColos.close()
     glEnableClientState(GL_COLOR_ARRAY)
     glColorPointer(4, GL_FLOAT, 0, 0L)
 
+    val stackNormals = stackPush
     try {
-      val stack = stackPush
-      try {
-        val bufferNormals = stackMallocFloat(3 * 4 * 2)
-        bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
-        bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
-        bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
+      val bufferNormals = stackMallocFloat(3 * 4 * 2)
+      bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
+      bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
+      bufferNormals.put(0.0f).put(0.0f).put(+1.0f).put(0.0f)
 
-        bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
-        bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
-        bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
-        bufferNormals.flip
+      bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
+      bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
+      bufferNormals.put(0.0f).put(0.0f).put(-1.0f).put(0.0f)
+      bufferNormals.flip
 
-        val vboNormals = glGenBuffers
-        glBindBuffer(GL_ARRAY_BUFFER, vboNormals)
-        glBufferData(GL_ARRAY_BUFFER, bufferNormals, GL_STATIC_DRAW)
+      val vboNormals = glGenBuffers
+      glBindBuffer(GL_ARRAY_BUFFER, vboNormals)
+      glBufferData(GL_ARRAY_BUFFER, bufferNormals, GL_STATIC_DRAW)
 
-      } finally if (stack != null) stack.close()
-    }
+    } finally if (stackNormals != null) stackNormals.close()
     glEnableClientState(GL_NORMAL_ARRAY)
     glNormalPointer(GL_FLOAT, 0, 0L)
 
+    val stackTexCoords = stackPush
     try {
-      val stack = stackPush
-      try {
-        val bufferTexCoords = stackMallocFloat(3 * 2 * 2)
-        bufferTexCoords.put(0.0f).put(0.0f)
-        bufferTexCoords.put(1.0f).put(0.0f)
-        bufferTexCoords.put(0.0f).put(1.0f)
+      val bufferTexCoords = stackMallocFloat(3 * 2 * 2)
+      bufferTexCoords.put(0.0f).put(0.0f)
+      bufferTexCoords.put(1.0f).put(0.0f)
+      bufferTexCoords.put(0.0f).put(1.0f)
 
-        bufferTexCoords.put(1.0f).put(0.0f)
-        bufferTexCoords.put(1.0f).put(1.0f)
-        bufferTexCoords.put(0.0f).put(1.0f)
-        bufferTexCoords.flip
+      bufferTexCoords.put(1.0f).put(0.0f)
+      bufferTexCoords.put(1.0f).put(1.0f)
+      bufferTexCoords.put(0.0f).put(1.0f)
+      bufferTexCoords.flip
 
-        val vboTexCoords = glGenBuffers
-        glBindBuffer(GL_ARRAY_BUFFER, vboTexCoords)
-        glBufferData(GL_ARRAY_BUFFER, bufferTexCoords, GL_STATIC_DRAW)
+      val vboTexCoords = glGenBuffers
+      glBindBuffer(GL_ARRAY_BUFFER, vboTexCoords)
+      glBufferData(GL_ARRAY_BUFFER, bufferTexCoords, GL_STATIC_DRAW)
 
-      } finally if (stack != null) stack.close()
-    }
+    } finally if (stackTexCoords != null) stackTexCoords.close()
+
     glEnableClientState(GL_TEXTURE_COORD_ARRAY)
     glTexCoordPointer(2, GL_FLOAT, 0, 0L)
 
@@ -168,14 +161,15 @@ class MainGL { // The window handle
   }
 
   private def initGL(): Unit = { // Setup an error callback. The default implementation
-    // will print the error message in System.err.
-    GLFWErrorCallback.createPrint(System.err).set
     // Initialize GLFW. Most GLFW functions will not work before doing this.
-    if (!glfwInit) throw new IllegalStateException("Unable to initialize GLFW")
+    if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW")
     // Configure GLFW
     glfwDefaultWindowHints() // optional, the current window hints are already the default
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE) // the window will stay hidden after creation
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE) // the window will be resizable
+
+    // will print the error message in System.err.
+    GLFWErrorCallback.createPrint(System.err).set
 
     // Create the window
     window = glfwCreateWindow(windowWidth, windowHeight, "URayTracer", NULL, NULL)
@@ -191,21 +185,20 @@ class MainGL { // The window handle
     })
 
     // Get the thread stack and push a new frame
+    val stackRes = stackPush
     try {
-      val stack = stackPush
-      try {
-        val pWidth = stack.mallocInt(1) // int*
-        val pHeight = stack.mallocInt(1)
-        // Get the window size passed to glfwCreateWindow
-        glfwGetWindowSize(window, pWidth, pHeight)
-        // Get the resolution of the primary monitor
-        val vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor)
-        // Center the window
-        glfwSetWindowPos(window, (vidmode.width - pWidth.get(0)) / 2, (vidmode.height - pHeight.get(0)) / 2)
-      } finally if (stack != null) {
-        stack.close()
-      }
-    } // the stack frame is popped automatically
+      val pWidth = stackRes.mallocInt(1) // int*
+      val pHeight = stackRes.mallocInt(1)
+      // Get the window size passed to glfwCreateWindow
+      glfwGetWindowSize(window, pWidth, pHeight)
+      // Get the resolution of the primary monitor
+      val vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor)
+      // Center the window
+      glfwSetWindowPos(window, (vidmode.width - pWidth.get(0)) / 2, (vidmode.height - pHeight.get(0)) / 2)
+    } finally if (stackRes != null) {
+      stackRes.close()
+    }
+    // the stack frame is popped automatically
 
     // Make the OpenGL context current
     glfwMakeContextCurrent(window)
